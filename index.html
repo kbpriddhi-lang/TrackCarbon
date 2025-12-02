@@ -162,7 +162,6 @@
 
   function calc() {
     try {
-      // read values (with safe defaults)
       const meat  = getCheckedValue('meat', 3);
       const local = getCheckedValue('local', 30);
       const house = getCheckedValue('house', 0.7);
@@ -174,7 +173,6 @@
       const trans = getCheckedValue('trans', 0);
       const waste = getCheckedValue('waste', 0.5);
 
-      // quick sanity checks — helpful if some input names were changed accidentally
       const required = {meat, local, house, people, mat, size, eff, renew, trans, waste};
       for(const key in required){
         if(required[key] === undefined || required[key] === null){
@@ -182,7 +180,6 @@
         }
       }
 
-      // calculation (same logic as before)
       let co2 = 500;
       co2 += meat * 120;
       co2 -= local * 2;
@@ -201,32 +198,26 @@
 
       showResult(co2, medal, cls, score);
     } catch(err) {
-      // show friendly error on page (and log to console)
       console.error(err);
       showError(err.message || 'Unknown problem — check console.');
     }
   }
 
-  // attach handler safely after DOM loads
-  document.addEventListener('DOMContentLoaded', function(){
-    // Force clear browser cache for this form
-    if(window.location.hash === '') {
-      window.location.hash = 'reset';
-    }
-
-    // Uncheck ALL radio buttons first
+  // Reset on page load
+  window.addEventListener('load', function(){
+    // Remove ALL checked attributes
     document.querySelectorAll('input[type="radio"]').forEach(radio => {
       radio.checked = false;
     });
 
-    // Clear the result display
+    // Reset result display
     const resultDiv = document.getElementById('result');
     resultDiv.innerHTML = '<small>Select options above then press the button.</small>';
     resultDiv.className = '';
 
+    // Attach button click
     const btn = document.getElementById('calcBtn');
-    if(!btn) return console.error('Button #calcBtn not found');
-    btn.addEventListener('click', calc, false);
+    if(btn) btn.addEventListener('click', calc);
   });
 })();
 </script>
