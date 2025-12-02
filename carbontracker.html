@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Carbon Footprint Tracker - DEBUG FRIENDLY</title>
+<style>
+  body {margin:0;padding:20px;font-family:Arial;background:linear-gradient(rgba(0,50,0,0.9),rgba(0,100,0,0.9)),url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d') center/cover fixed;color:#e8f5e9;}
+  h1 {text-align:center;font-size:3em;color:#c8e6c9;text-shadow:0 0 20px #000;}
+  .box {max-width:900px;margin:0 auto;background:rgba(0,80,0,0.95);padding:30px;border-radius:20px;box-shadow:0 0 30px #000;}
+  .q {background:rgba(255,255,255,0.15);padding:20px;margin:20px 0;border-radius:15px;border-left:6px solid #81c784;}
+  .q p {font-size:1.4em;margin:0 0 15px;font-weight:bold;}
+  label {display:block;margin:15px 0;padding:12px;background:rgba(255,255,255,0.1);border-radius:10px;font-size:1.1em;cursor:pointer;}
+  label:hover {background:rgba(100,200,100,0.4);}
+  input[type=radio] {margin-right:15px;transform:scale(1.5);}
+  button {width:100%;padding:20px;margin:40px 0 20px;background:#4caf50;color:white;border:none;border-radius:15px;font-size:2em;cursor:pointer;}
+  button:hover {background:#66bb6a;}
+  #result {padding:40px;background:#000;border-radius:20px;text-align:center;font-size:2em;border:5px solid #81c784;margin-top:20px; min-height:150px; display:flex; align-items:center; justify-content:center; flex-direction:column;}
+  .golden {border-color:gold;background:rgba(255,215,0,0.3);}
+  .silver {border-color:silver;background:rgba(200,200,200,0.3);}
+  .copper {border-color:#cd7f32;background:rgba(205,127,50,0.3);}
+  .grey   {border-color:#aaa;background:rgba(150,150,150,0.3);}
+  .black  {border-color:#fff;background:rgba(0,0,0,0.9);}
+  .err {background:rgba(255,0,0,0.15);border:2px solid rgba(255,0,0,0.5);padding:12px;border-radius:8px;color:#fff;}
+  small {opacity:0.85}
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>Carbon Footprint Tracker</h1>
+
+  <!-- QUESTIONS (same as before, with defaults checked) -->
+  <div class="q"><p>1. How often do you eat animal-based products?</p>
+    <label><input type="radio" name="meat" value="5"> Very Often</label>
+    <label><input type="radio" name="meat" value="4"> Often</label>
+    <label><input type="radio" name="meat" value="3" checked> Occasionally</label>
+    <label><input type="radio" name="meat" value="2"> Rarely</label>
+    <label><input type="radio" name="meat" value="0"> Never (vegan)</label>
+  </div>
+
+  <div class="q"><p>2. % of food unpackaged/locally grown?</p>
+    <label><input type="radio" name="local" value="0"> 0–20%</label>
+    <label><input type="radio" name="local" value="30" checked> 21–40%</label>
+    <label><input type="radio" name="local" value="60"> 41–70%</label>
+    <label><input type="radio" name="local" value="90"> 71–100%</label>
+  </div>
+
+  <div class="q"><p>3. Housing type?</p>
+    <label><input type="radio" name="house" value="1.0"> Detached house</label>
+    <label><input type="radio" name="house" value="0.7" checked> Semi-detached</label>
+    <label><input type="radio" name="house" value="0.5"> Apartment</label>
+    <label><input type="radio" name="house" value="0.4"> Small studio</label>
+  </div>
+
+  <div class="q"><p>4. People in house?</p>
+    <label><input type="radio" name="people" value="1"> 1</label>
+    <label><input type="radio" name="people" value="2"> 2</label>
+    <label><input type="radio" name="people" value="3" checked> 3</label>
+    <label><input type="radio" name="people" value="4"> 4</label>
+    <label><input type="radio" name="people" value="5"> 5</label>
+    <label><input type="radio" name="people" value="6"> >5</label>
+  </div>
+
+  <div class="q"><p>5. Construction material?</p>
+    <label><input type="radio" name="mat" value="1.3"> Concrete/brick</label>
+    <label><input type="radio" name="mat" value="1.0" checked> Mixed</label>
+    <label><input type="radio" name="mat" value="0.7"> Wood/eco</label>
+  </div>
+
+  <div class="q"><p>6. Home size?</p>
+    <label><input type="radio" name="size" value="80"> &lt;100 m²</label>
+    <label><input type="radio" name="size" value="300" checked> 100–500 m²</label>
+    <label><input type="radio" name="size" value="750"> 500–1000 m²</label>
+    <label><input type="radio" name="size" value="1250"> 1000–1500 m²</label>
+    <label><input type="radio" name="size" value="2000"> &gt;1500 m²</label>
+  </div>
+
+  <div class="q"><p>7. Energy efficiency?</p>
+    <label><input type="radio" name="eff" value="1.5"> Very poor</label>
+    <label><input type="radio" name="eff" value="1.0" checked> Average</label>
+    <label><input type="radio" name="eff" value="0.5"> Very efficient</label>
+  </div>
+
+  <div class="q"><p>8. Renewable electricity?</p>
+    <label><input type="radio" name="renew" value="0"> 0–20%</label>
+    <label><input type="radio" name="renew" value="50" checked> 21–80%</label>
+    <label><input type="radio" name="renew" value="95"> 81–100%</label>
+  </div>
+
+  <div class="q"><p>9–11. Car / Public / Flights</p>
+    <label><input type="radio" name="trans" value="0" checked> Very low / none</label>
+    <label><input type="radio" name="trans" value="10"> Moderate</label>
+    <label><input type="radio" name="trans" value="30"> High / frequent flights</label>
+  </div>
+
+  <div class="q"><p>12–13. Plastic & Recycling</p>
+    <label><input type="radio" name="waste" value="1.0"> High plastic, low recycling</label>
+    <label><input type="radio" name="waste" value="0.5" checked> Moderate</label>
+    <label><input type="radio" name="waste" value="0.1"> Almost zero plastic, 90%+ recycle</label>
+  </div>
+
+  <button id="calcBtn" type="button">Calculate My Carbon Footprint</button>
+  <div id="result"><small>Select options above then press the button.</small></div>
+</div>
+
+<script>
+(function(){
+  // safe getter for radio groups — works even if nothing is checked
+  function getCheckedValue(name, def){
+    const nodes = document.getElementsByName(name);
+    if(!nodes || nodes.length === 0) return def;
+    for(let i=0;i<nodes.length;i++){
+      if(nodes[i].checked) {
+        const v = parseFloat(nodes[i].value);
+        return isNaN(v) ? def : v;
+      }
+    }
+    return def;
+  }
+
+  function showError(msg){
+    const r = document.getElementById('result');
+    r.className = '';
+    r.innerHTML = `<div class="err"><strong>Error:</strong> ${msg}</div>`;
+  }
+
+  function showResult(co2, medal, cls, score){
+    const r = document.getElementById('result');
+    r.className = cls;
+    r.innerHTML = 
+      `<strong>Your Carbon Footprint</strong><br><br>
+       <span style="font-size:72px">${co2} kg CO₂e/month</span><br><br>
+       <div style="font-size:40px">${medal}</div>
+       <div style="margin-top:10px">Score: ${score.toFixed(1)}/10</div>`;
+  }
+
+  function calc() {
+    try {
+      // read values (with safe defaults)
+      const meat  = getCheckedValue('meat', 3);
+      const local = getCheckedValue('local', 30);
+      const house = getCheckedValue('house', 0.7);
+      const people= getCheckedValue('people', 3);
+      const mat   = getCheckedValue('mat', 1.0);
+      const size  = getCheckedValue('size', 300);
+      const eff   = getCheckedValue('eff', 1.0);
+      const renew = getCheckedValue('renew', 50);
+      const trans = getCheckedValue('trans', 0);
+      const waste = getCheckedValue('waste', 0.5);
+
+      // quick sanity checks — helpful if some input names were changed accidentally
+      const required = {meat, local, house, people, mat, size, eff, renew, trans, waste};
+      for(const key in required){
+        if(required[key] === undefined || required[key] === null){
+          throw new Error('Missing input: ' + key);
+        }
+      }
+
+      // calculation (same logic as before)
+      let co2 = 500;
+      co2 += meat * 120;
+      co2 -= local * 2;
+      co2 += (size / people) * house * mat * eff * (1 - renew/100) * 1.5;
+      co2 += trans * 25;
+      co2 += waste * 200;
+      co2 = Math.round(co2);
+
+      const score = Math.max(0, Math.min(10, 11 - co2/200));
+
+      let medal = "Black Footprint", cls = "black";
+      if(score >= 9) { medal = "Golden Footprint"; cls="golden"; }
+      else if(score >= 7.5) { medal = "Silver Footprint"; cls="silver"; }
+      else if(score >= 6) { medal = "Copper Footprint"; cls="copper"; }
+      else if(score >= 4) { medal = "Grey Footprint"; cls="grey"; }
+
+      showResult(co2, medal, cls, score);
+    } catch(err) {
+      // show friendly error on page (and log to console)
+      console.error(err);
+      showError(err.message || 'Unknown problem — check console.');
+    }
+  }
+
+  // attach handler safely after DOM loads
+  document.addEventListener('DOMContentLoaded', function(){
+    // Force clear browser cache for this form
+    if(window.location.hash === '') {
+      window.location.hash = 'reset';
+    }
+
+    // Uncheck ALL radio buttons first
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+      radio.checked = false;
+    });
+
+    // Clear the result display
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = '<small>Select options above then press the button.</small>';
+    resultDiv.className = '';
+
+    const btn = document.getElementById('calcBtn');
+    if(!btn) return console.error('Button #calcBtn not found');
+    btn.addEventListener('click', calc, false);
+  });
+})();
+</script>
+</body>
+</html>
